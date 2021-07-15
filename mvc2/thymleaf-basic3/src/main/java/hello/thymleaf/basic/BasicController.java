@@ -1,5 +1,6 @@
 package hello.thymleaf.basic;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -46,7 +47,12 @@ public class BasicController {
         model.addAttribute("userMap",map);
 
         return "basic/variable";
-
+    }
+    @GetMapping("/operation")
+    public String operation(Model model){
+        model.addAttribute("nullData",null);
+        model.addAttribute("data","Spring");
+        return "basic/operation";
     }
 
     @GetMapping("/date")
@@ -60,6 +66,11 @@ public class BasicController {
         model.addAttribute("param2","data2");
         return "basic/link";
     }
+    @GetMapping("/literal")
+    public String literal(Model model){
+        model.addAttribute("data","Spring!");
+        return "basic/literal";
+    }
 
     @GetMapping("/basic-objects")
     public String basicObjects(HttpSession session){
@@ -72,6 +83,29 @@ public class BasicController {
         public String hello(String data){
             return "Hello "+ data;
         }
+    }
+    @GetMapping("/condition")
+    public String condition(Model model){
+        addUsers(model);
+        return "basic/condition";
+    }
+    @GetMapping("/comments")
+    public String comments(Model model){
+        model.addAttribute("data","Spring!");
+        return "basic/comments";
+    }
+
+    @GetMapping("/each")
+    public String each(Model model) {
+        addUsers(model);
+        return "basic/each";
+    }
+    private void addUsers(Model model) {
+        List<User> list = new ArrayList<>();
+        list.add(new User("userA", 10));
+        list.add(new User("userB", 20));
+        list.add(new User("userC", 30));
+        model.addAttribute("users", list);
     }
 
 
